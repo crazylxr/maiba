@@ -1,4 +1,4 @@
-=<template>
+<template>
 <div class="login-container">
   <main>
     <div>
@@ -51,11 +51,11 @@ export default {
                 this.showSignIn = false
                 this.showSignUp = true
             }
-          },
-          handleClick() {
-              console.log(55);
-          }
-      }
+        },
+        handleClick() {
+            console.log(55);
+        }
+    }
 }
 </script>
 <style lang="less" scoped>

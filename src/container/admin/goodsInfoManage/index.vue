@@ -15,12 +15,33 @@
   </div>
 
   <div class="block">
-    <span class="demonstration">分类：</span>
-    <el-cascader
-      :options="options"
-      v-model="selectedClassification"
-      >
-    </el-cascader>
+    <el-col :span="10">
+      <span class="demonstration">分类：</span>
+      <el-cascader
+        :options="options"
+        v-model="selectedClassification"
+        @change="handleChange"
+        >
+      </el-cascader>
+    </el-col>
+
+    <el-col :span="10">
+      <span class="demonstration">库存：</span>
+      <el-input-number label="库存："></el-input-number>
+    </el-col>
+  </div>
+
+  <div class="block">
+    <el-col :span="10">
+      <span class="demonstration">原价：</span>
+      <el-input label="原价："></el-input>
+    </el-col>
+
+    <el-col :span="10">
+      <span class="demonstration">折后价：</span>
+      <el-input label="原价："></el-input>
+    </el-col>
+
   </div>
 
   <div class="main_image">
@@ -75,11 +96,15 @@ export default {
             dialogVisible: false,
             description: '',
             majorImages: [],
-            minorImages: []
+            minorImages: [],
+            selectedClassification: [],
+            options: []
         }
     },
     created() {
-        getAllClassification().then();
+        getAllClassification().then(res => {
+            this.options = res.data.data[0].children
+        });
     },
     methods: {
         handleMajorRemove(file, fileList) {
@@ -112,6 +137,10 @@ export default {
         save() {
             console.log(this.title);
             console.log(this.description);
+        },
+
+        handleChange(value) {
+            console.log(value);
         }
     }
 }

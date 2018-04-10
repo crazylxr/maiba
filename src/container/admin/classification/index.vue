@@ -65,7 +65,7 @@ export default {
                 return;
             }
 
-            const response = await classificationApi.saveClassification({ parentId: this.tmpData.id, name: this.tmpLabel});
+            const response = await classificationApi.saveClassification({ parentId: this.tmpData.value, name: this.tmpLabel});
             const allResponse = await this.fetchAll();
 
             if (allResponse.data.code === '0000') {
@@ -89,7 +89,7 @@ export default {
         },
 
         async sureDelete() {
-            const response = await classificationApi.deleteClassification(this.tmpData.id);
+            const response = await classificationApi.deleteClassification(this.tmpData.value);
 
             await this.fetchAll();
 

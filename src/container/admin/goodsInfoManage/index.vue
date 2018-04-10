@@ -1,154 +1,99 @@
 <template>
-<div class="goodsInfoManage">
-  <div class="title">
-    <span class="text">商品标题:</span> <el-input width="100px;" v-model="title" placeholder="请输入商品标题"></el-input>
-  </div>
+  <div class="goodsInfoManage">
+    <div class="goodsTree">
+      <el-card>
+        <el-tree :data="treeData" :props="defaultProps" @node-click="handleNodeClick"></el-tree>
+      </el-card>
+    </div>
 
-  <div class="description">
-    <span class="text">商品描述:</span>
-    <el-input
-      type="textarea"
-      :row="2"
-      v-model="description"
-      >
-    </el-input>
-  </div>
+    <div class="goodsList">
+      <el-card>
+        <div class="toolbar">
+          <el-button @click="showDialog('add')" size="mini" type="primary">新增</el-button>
+          <el-button size="mini" type="primary">批量删除</el-button>
+        </div>
 
-  <div class="block">
-    <el-col :span="10">
-      <span class="demonstration">分类：</span>
-      <el-cascader
-        :options="options"
-        v-model="selectedClassification"
-        @change="handleChange"
-        >
-      </el-cascader>
-    </el-col>
+        <el-table :data="tableData" style="width: 100%">
+          <el-table-column prop="date" label="日期" width="180" type="selection">
+          </el-table-column>
+          <el-table-column prop="name" label="姓名" width="180">
+          </el-table-column>
+          <el-table-column prop="address" label="地址">
+          </el-table-column>
+          <el-table-column fixed="right" label="操作" width="150">
+            <template slot-scope="scope">
+              <el-button type="text" size="small">查看</el-button>
+              <el-button type="text" size="small">编辑</el-button>
+              <el-button type="text" size="small">删除</el-button>
+            </template>
+          </el-table-column>
+        </el-table>
+      </el-card>
+    </div>
 
-    <el-col :span="10">
-      <span class="demonstration">库存：</span>
-      <el-input-number label="库存："></el-input-number>
-    </el-col>
-  </div>
-
-  <div class="block">
-    <el-col :span="10">
-      <span class="demonstration">原价：</span>
-      <el-input label="原价："></el-input>
-    </el-col>
-
-    <el-col :span="10">
-      <span class="demonstration">折后价：</span>
-      <el-input label="原价："></el-input>
-    </el-col>
-
-  </div>
-
-  <div class="main_image">
-    主图：
-    <el-upload
-      action="resources"
-      name="fileName"
-      list-type="picture-card"
-      :on-preview="handleMajorPictureCardPreview"
-      :on-remove="handleMajorRemove"
-      :on-success="handleMajorSuccess"
-      >
-      <i class="el-icon-plus"></i>
-    </el-upload>
-    <el-dialog :visible.sync="dialogVisible">
-      <img width="100%" :src="dialogImageUrl" alt="">
+    <el-dialog :visible.sync="dialogFormVisible">
+      <Goods @ok="refresh"></Goods>
     </el-dialog>
   </div>
-
-  <div class="detail_image">
-    详细图：
-    <el-upload
-      action="https://jsonplaceholder.typicode.com/posts/"
-      list-type="picture-card"
-      :auto-upload="false"
-      :on-preview="handleMinorPictureCardPreview"
-      :on-remove="handleMinorRemove"
-      :on-success="handleMinorSuccess"
-      >
-      <i class="el-icon-plus"></i>
-    </el-upload>
-    <el-dialog :visible.sync="dialogVisible">
-      <img width="100%" :src="dialogImageUrl" alt="">
-    </el-dialog>
-  </div>
-
-  <div class="operator">
-    <el-button type="primary" @click="save(0)">保存</el-button>
-    <el-button type="primary" @click="save(1)">上架</el-button>
-  </div>
-</div>
 </template>
 
 <script>
-import { getAllClassification } from '../../../api/admin/classifationApi'
+import { getAllClassification } from "../../../api/admin/classifationApi";
+import Goods from "./goods/index";
 
 export default {
-    data () {
-        return {
-            title: '',
-            dialogImageUrl: '',
-            dialogVisible: false,
-            description: '',
-            majorImages: [],
-            minorImages: [],
-            selectedClassification: [],
-            options: []
+  components: { Goods: Goods },
+  data() {
+    return {
+      dialogFormVisible: false,
+      treeData: [],
+      defaultProps: {
+        children: "children",
+        label: "label"
+      },
+      tableData: [
+        {
+          date: "2016-05-02",
+          name: "王小虎",
+          address: "上海市普陀区金沙江路 1518 弄"
+        },
+        {
+          date: "2016-05-04",
+          name: "王小虎",
+          address: "上海市普陀区金沙江路 1517 弄"
+        },
+        {
+          date: "2016-05-01",
+          name: "王小虎",
+          address: "上海市普陀区金沙江路 1519 弄"
+        },
+        {
+          date: "2016-05-03",
+          name: "王小虎",
+          address: "上海市普陀区金沙江路 1516 弄"
         }
+      ]
+    };
+  },
+  created() {
+    this.refresh();
+  },
+
+  methods: {
+    refresh() {
+      getAllClassification().then(res => {
+        this.treeData = res.data.data[0].children;
+      });
     },
-    created() {
-        getAllClassification().then(res => {
-            this.options = res.data.data[0].children
-        });
-    },
-    methods: {
-        handleMajorRemove(file, fileList) {
-            console.log(file, fileList);
-        },
-        handleMajorPictureCardPreview(file) {
-            console.log(file);
-            this.dialogImageUrl = file.url;
-            this.dialogVisible = true;
-        },
-
-        handleMinorRemove(file, fileList) {
-            console.log(file, fileList);
-        },
-
-        handleMinorPictureCardPreview(file) {
-            console.log(file);
-            this.dialogImageUrl = file.url;
-            this.dialogVisible = true;
-        },
-
-        handleMajorSuccess(res, file, fileList) {
-            console.log(res);
-        },
-
-        handleMinorSuccess(res, file, fileList) {
-            console.log(res);
-        },
-
-        save() {
-            console.log(this.title);
-            console.log(this.description);
-        },
-
-        handleChange(value) {
-            console.log(value);
-        }
+    handleNodeClick() {},
+    showDialog(type = "add") {
+      this.dialogFormVisible = true;
     }
-}
+  }
+};
 </script>
 
-<style lang="less">
-@import './index.less';
-
-.el-input {
-}
+<style lang="less" scoped>
+@import url("./index.less");
 </style>
+

@@ -13,18 +13,30 @@
           <el-button size="mini" type="primary">批量删除</el-button>
         </div>
 
-        <el-table :data="tableData" style="width: 100%">
-          <el-table-column prop="date" label="日期" width="180" type="selection">
+        <el-table :data="mapTableData()" style="width: 100%" border>
+          <el-table-column prop="goodsId" label="商品id" type="selection">
           </el-table-column>
-          <el-table-column prop="name" label="姓名" width="180">
+          <el-table-column prop="goodsId" label="商品id" width="130">
           </el-table-column>
-          <el-table-column prop="address" label="地址">
+          <el-table-column prop="name" label="商品名字">
+          </el-table-column>
+          <!-- <el-table-column prop="description" label="商品描述">
+          </el-table-column> -->
+          <el-table-column prop="price" label="价格" width="75">
+          </el-table-column>
+          <el-table-column prop="discountPrice" label="折后价" width="75">
+          </el-table-column>
+          <el-table-column prop="inventory" label="库存" width="50">
+          </el-table-column>
+          <el-table-column prop="volume" label="销量" width="50">
+          </el-table-column>
+          <el-table-column prop="shelf" label="是否上架" width="80">
           </el-table-column>
           <el-table-column fixed="right" label="操作" width="150">
             <template slot-scope="scope">
               <el-button type="text" size="small">查看</el-button>
               <el-button type="text" size="small">编辑</el-button>
-              <el-button type="text" size="small">删除</el-button>
+              <el-button type="text" @click="deleteGoodsById(scope.row)"  size="small">删除</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -38,8 +50,9 @@
 </template>
 
 <script>
-import { getAllClassification } from "../../../api/admin/classifationApi";
-import Goods from "./goods/index";
+import { getAllClassification } from '../../../api/admin/classifationApi'
+import { getGoods, deleteGoods } from '../../../api/admin/goodsApi'
+import Goods from './goods/index'
 
 export default {
   components: { Goods: Goods },
@@ -48,52 +61,50 @@ export default {
       dialogFormVisible: false,
       treeData: [],
       defaultProps: {
-        children: "children",
-        label: "label"
+        children: 'children',
+        label: 'label'
       },
-      tableData: [
-        {
-          date: "2016-05-02",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄"
-        },
-        {
-          date: "2016-05-04",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1517 弄"
-        },
-        {
-          date: "2016-05-01",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1519 弄"
-        },
-        {
-          date: "2016-05-03",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1516 弄"
-        }
-      ]
-    };
+      tableData: []
+    }
   },
   created() {
-    this.refresh();
+    this.refresh()
   },
 
   methods: {
-    refresh() {
-      getAllClassification().then(res => {
-        this.treeData = res.data.data[0].children;
-      });
+    async deleteGoodsById(row, col) {
+      const res = await deleteGoods(row.pkId);
+      this.refresh();
     },
-    handleNodeClick() {},
-    showDialog(type = "add") {
-      this.dialogFormVisible = true;
+    async refresh() {
+      getAllClassification().then(res => {
+        this.treeData = res.data.data[0].children
+      })
+
+      const res = await getGoods()
+      const tableData = res.data.data.content
+      this.tableData = tableData
+
+      this.dialogFormVisible = false
+    },
+    handleNodeClick() {
+
+    },
+    showDialog(type = 'add') {
+      this.dialogFormVisible = true
+    },
+    mapTableData() {
+      const _tableData = JSON.parse(JSON.stringify(this.tableData));
+      return _tableData.map(item => {
+        item.shelf = item.shelf ? '是' : '否';
+        return item;
+      })
     }
   }
-};
+}
 </script>
 
 <style lang="less" scoped>
-@import url("./index.less");
+@import url('./index.less');
 </style>
 

@@ -2,7 +2,7 @@
   <div class="goods">
     <div class="title">
       <span class="text">商品标题:</span>
-      <el-input width="100px;" v-model="form.title" placeholder="请输入商品标题"></el-input>
+      <el-input width="100px;" v-model="title" placeholder="请输入商品标题"></el-input>
     </div>
 
     <div class="description">
@@ -14,7 +14,7 @@
     <div class="block">
       <el-col :span="10">
         <span class="demonstration">分类：</span>
-        <el-cascader :options="options" v-model="form.selectedClassification" @change="handleChange">
+        <el-cascader :options="options" v-model="selectedClassification" @change="handleChange">
         </el-cascader>
       </el-col>
 
@@ -66,6 +66,7 @@
 
 <script>
 import { getAllClassification } from "../../../../api/admin/classifationApi";
+import { saveGoods } from '../../../../api/admin/goodsApi'
 
 export default {
   name: "Goods",
@@ -80,16 +81,27 @@ export default {
       selectedClassification: [],
       options: [],
       form: {
-        title: '',
+        name: '',
         description: '',
         majorImages: [],
         minorImages: [],
         inventory: 2,
         discountPrice: 50,
-        price: 100
+        price: 100,
+        classificationId: []
       }
     };
   },
+
+  watch: {
+    selectedClassification: function(val) {
+      this.form.classificationId = JSON.stringify(val);
+    },
+    title: function(val) {
+      this.form.name = val;
+    }
+  },
+
   created() {
     getAllClassification().then(res => {
       this.options = res.data.data[0].children;
@@ -125,8 +137,8 @@ export default {
 
     save() {
       this.$emit('ok');
-      console.log(this.form);
-      console.log(this.description);
+      saveGoods(this.form);
+      this.dialogVisible = false;
     },
 
     handleChange(value) {

@@ -49,7 +49,7 @@
 
     <div class="detail_image">
       详细图：
-      <el-upload action="https://jsonplaceholder.typicode.com/posts/" list-type="picture-card" :auto-upload="false" :on-preview="handleMinorPictureCardPreview" :on-remove="handleMinorRemove" :on-success="handleMinorSuccess">
+      <el-upload action="resources" name="fileName" list-type="picture-card"  :on-preview="handleMinorPictureCardPreview" :on-remove="handleMinorRemove" :on-success="handleMinorSuccess">
         <i class="el-icon-plus"></i>
       </el-upload>
       <el-dialog :visible.sync="dialogVisible">
@@ -75,9 +75,6 @@ export default {
       title: "",
       dialogImageUrl: "",
       dialogVisible: false,
-      description: "",
-      majorImages: [],
-      minorImages: [],
       selectedClassification: [],
       options: [],
       form: {
@@ -128,10 +125,12 @@ export default {
     },
 
     handleMajorSuccess(res, file, fileList) {
+      this.form.majorImages.push(res.data.pkId);
       console.log(res);
     },
 
     handleMinorSuccess(res, file, fileList) {
+      this.form.minorImages.push(res.data.pkId);
       console.log(res);
     },
 
@@ -151,6 +150,4 @@ export default {
 <style lang="less">
 @import "./index.less";
 
-.el-input {
-}
 </style>

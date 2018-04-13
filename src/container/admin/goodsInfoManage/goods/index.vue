@@ -65,15 +65,15 @@
 </template>
 
 <script>
-import { getAllClassification } from "../../../../api/admin/classifationApi";
+import { getAllClassification } from '../../../../api/admin/classifationApi'
 import { saveGoods } from '../../../../api/admin/goodsApi'
 
 export default {
-  name: "Goods",
-  data() {
+  name: 'Goods',
+  data () {
     return {
-      title: "",
-      dialogImageUrl: "",
+      title: '',
+      dialogImageUrl: '',
       dialogVisible: false,
       selectedClassification: [],
       options: [],
@@ -87,64 +87,64 @@ export default {
         price: 100,
         classificationId: []
       }
-    };
+    }
   },
 
   watch: {
-    selectedClassification: function(val) {
-      this.form.classificationId = JSON.stringify(val);
+    selectedClassification: function (val) {
+      this.form.classificationId = JSON.stringify(val)
     },
-    title: function(val) {
-      this.form.name = val;
+    title: function (val) {
+      this.form.name = val
     }
   },
 
-  created() {
+  created () {
     getAllClassification().then(res => {
-      this.options = res.data.data[0].children;
-    });
+      this.options = res.data.data[0].children
+    })
   },
   methods: {
-    handleMajorRemove(file, fileList) {
-      console.log(file, fileList);
+    handleMajorRemove (file, fileList) {
+      console.log(file, fileList)
     },
-    handleMajorPictureCardPreview(file) {
-      console.log(file);
-      this.dialogImageUrl = file.url;
-      this.dialogVisible = true;
-    },
-
-    handleMinorRemove(file, fileList) {
-      console.log(file, fileList);
+    handleMajorPictureCardPreview (file) {
+      console.log(file)
+      this.dialogImageUrl = file.url
+      this.dialogVisible = true
     },
 
-    handleMinorPictureCardPreview(file) {
-      console.log(file);
-      this.dialogImageUrl = file.url;
-      this.dialogVisible = true;
+    handleMinorRemove (file, fileList) {
+      console.log(file, fileList)
     },
 
-    handleMajorSuccess(res, file, fileList) {
-      this.form.majorImages.push(res.data.pkId);
-      console.log(res);
+    handleMinorPictureCardPreview (file) {
+      console.log(file)
+      this.dialogImageUrl = file.url
+      this.dialogVisible = true
     },
 
-    handleMinorSuccess(res, file, fileList) {
-      this.form.minorImages.push(res.data.pkId);
-      console.log(res);
+    handleMajorSuccess (res, file, fileList) {
+      this.form.majorImages.push(res.data.pkId)
+      console.log(res)
     },
 
-    save() {
-      this.$emit('ok');
-      saveGoods(this.form);
-      this.dialogVisible = false;
+    handleMinorSuccess (res, file, fileList) {
+      this.form.minorImages.push(res.data.pkId)
+      console.log(res)
     },
 
-    handleChange(value) {
-      console.log(value);
+    save () {
+      this.$emit('ok')
+      saveGoods(this.form)
+      this.dialogVisible = false
+    },
+
+    handleChange (value) {
+      console.log(value)
     }
   }
-};
+}
 </script>
 
 <style lang="less">

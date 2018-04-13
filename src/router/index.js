@@ -15,7 +15,7 @@ export default new Router({
       children: [{
         path: 'user',
         component: User
-      },{
+      }, {
         path: 'classification',
         component: Classification
       }, {
@@ -23,8 +23,9 @@ export default new Router({
         component: GoodsInfoManage
       }],
       component: Index
-    },
-    {
+    }, {
+
+    }, {
       path: '/login',
       name: 'login',
       component: Login

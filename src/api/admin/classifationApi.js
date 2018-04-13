@@ -1,13 +1,13 @@
-import axios from 'axios';
+import axios from 'axios'
 
-export function getAllClassification() {
-  return axios.get('classifications');
+export function getAllClassification () {
+  return axios.get('admin/classifications')
 }
 
-export function saveClassification(classification) {
-  return axios.post('classification', classification);
+export function saveClassification (classification) {
+  return axios.post('admin/classification', classification)
 }
 
-export function deleteClassification(id) {
-  return axios.delete('classification/' + id);
+export function deleteClassification (id) {
+  return axios.delete('admin/classification/' + id)
 }

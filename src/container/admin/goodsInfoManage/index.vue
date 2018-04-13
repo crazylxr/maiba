@@ -56,7 +56,7 @@ import Goods from './goods/index'
 
 export default {
   components: { Goods: Goods },
-  data() {
+  data () {
     return {
       dialogFormVisible: false,
       treeData: [],
@@ -67,16 +67,16 @@ export default {
       tableData: []
     }
   },
-  created() {
+  created () {
     this.refresh()
   },
 
   methods: {
-    async deleteGoodsById(row, col) {
-      const res = await deleteGoods(row.pkId);
-      this.refresh();
+    async deleteGoodsById (row, col) {
+      deleteGoods(row.pkId)
+      this.refresh()
     },
-    async refresh() {
+    async refresh () {
       getAllClassification().then(res => {
         this.treeData = res.data.data[0].children
       })
@@ -87,17 +87,17 @@ export default {
 
       this.dialogFormVisible = false
     },
-    handleNodeClick() {
+    handleNodeClick () {
 
     },
-    showDialog(type = 'add') {
+    showDialog (type = 'add') {
       this.dialogFormVisible = true
     },
-    mapTableData() {
-      const _tableData = JSON.parse(JSON.stringify(this.tableData));
+    mapTableData () {
+      const _tableData = JSON.parse(JSON.stringify(this.tableData))
       return _tableData.map(item => {
-        item.shelf = item.shelf ? '是' : '否';
-        return item;
+        item.shelf = item.shelf ? '是' : '否'
+        return item
       })
     }
   }
@@ -107,4 +107,3 @@ export default {
 <style lang="less" scoped>
 @import url('./index.less');
 </style>
-

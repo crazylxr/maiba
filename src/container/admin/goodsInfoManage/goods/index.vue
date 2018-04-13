@@ -39,7 +39,7 @@
 
     <div class="main_image">
       主图：
-      <el-upload action="resources" name="fileName" list-type="picture-card" :on-preview="handleMajorPictureCardPreview" :on-remove="handleMajorRemove" :on-success="handleMajorSuccess">
+      <el-upload action="admin/resources" name="fileName" list-type="picture-card" :on-preview="handleMajorPictureCardPreview" :on-remove="handleMajorRemove" :on-success="handleMajorSuccess">
         <i class="el-icon-plus"></i>
       </el-upload>
       <el-dialog :visible.sync="dialogVisible">
@@ -49,7 +49,7 @@
 
     <div class="detail_image">
       详细图：
-      <el-upload action="resources" name="fileName" list-type="picture-card"  :on-preview="handleMinorPictureCardPreview" :on-remove="handleMinorRemove" :on-success="handleMinorSuccess">
+      <el-upload action="admin/resources" name="fileName" list-type="picture-card"  :on-preview="handleMinorPictureCardPreview" :on-remove="handleMinorRemove" :on-success="handleMinorSuccess">
         <i class="el-icon-plus"></i>
       </el-upload>
       <el-dialog :visible.sync="dialogVisible">

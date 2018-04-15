@@ -87,9 +87,6 @@ export default {
 
       this.dialogFormVisible = false
     },
-    handleNodeClick () {
-
-    },
     showDialog (type = 'add') {
       this.dialogFormVisible = true
     },

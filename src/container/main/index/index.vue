@@ -1,18 +1,30 @@
 <template>
   <div class="indexContainer">
     <el-card style="text-align: center;">
-      <el-form :inline="true" :model="searchForm" class="searchForm">
+      <el-form :inline="true" :model="searchForm" ref="searchForm" class="searchForm">
         <el-form-item label="标题：">
           <el-input v-model="searchForm.title" placeholder="标题"></el-input>
         </el-form-item>
-        <el-form-item label="价格:">
-          <el-input v-model="searchForm.startPrice"></el-input>
+        <el-form-item
+          label="价格:"
+          prop="startPrice"
+          :rules="[
+          ]"
+        >
+          <el-input
+            type="startPrice"
+            v-model.number="searchForm.startPrice"
+          ></el-input>
         </el-form-item>
-        <el-form-item label="~">
-          <el-input v-model="searchForm.endPrice"></el-input>
+        <el-form-item
+          label="~"
+          prop="endPrice"
+          :rules="[]"
+        >
+          <el-input type="endPrice" v-model.number="searchForm.endPrice"></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="onSubmit">查询</el-button>
+          <el-button type="primary" @click="onSubmit('searchForm')">查询</el-button>
         </el-form-item>
       </el-form>
     </el-card>
@@ -22,6 +34,10 @@
         <div class="goodsItem" v-for="(item, index) in data.content" :key="index">
           <el-card :body-style="{ padding: '10px', width: '100%'}">
             <img class="goodsImg" :src="item.majorImage.length > 0 ? 'http://' + item.majorImage[0].path : 'http://www.atool.org/placeholder.png?size=180x240'" alt="88">
+            <div class="info">
+              <h5>{{ item.goods.name }}</h5>
+              <span>{{ item.goods.price }}</span>
+            </div>
           </el-card>
         </div>
       </div>
@@ -38,8 +54,8 @@ export default {
       data: {},
       searchForm: {
         title: '',
-        startPrice: 0,
-        endPrice: 100
+        startPrice: '',
+        endPrice: ''
       }
     }
   },
@@ -49,6 +65,25 @@ export default {
       this.data = res.data.data
       console.log(res)
     })
+  },
+
+  methods: {
+    onSubmit (formName) {
+      this.$refs[formName].validate(valid => {
+        if (valid) {
+          getIndexGoods(0, 10, this.searchForm).then(res => {
+            this.data = res.data.data
+          })
+        } else {
+          this.$message({
+            message: '请输入正确的数据类型!',
+            type: 'warning',
+            duration: 1000
+          })
+          return false
+        }
+      })
+    }
   }
 }
 </script>
@@ -69,5 +104,9 @@ export default {
 }
 .goodsItem {
   padding: 5px;
+}
+
+.info {
+  width: 240px;
 }
 </style>

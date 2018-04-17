@@ -3,7 +3,9 @@
  */
 
 import axios from 'axios'
+import { parseObjectToUrl } from '../../util/tool'
 
-export function getIndexGoods (page = 0, size = 10) {
-  return axios.get(`/goods?page=${page}&size=${size}`)
+export function getIndexGoods (page = 0, size = 10, searchForm = {}) {
+  const param = parseObjectToUrl(searchForm)
+  return axios.get(`/goods?page=${page}&size=${size}${param}`)
 }

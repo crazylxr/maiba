@@ -34,8 +34,8 @@
           </el-table-column>
           <el-table-column fixed="right" label="操作" width="150">
             <template slot-scope="scope">
-              <el-button type="text" size="small">查看</el-button>
-              <el-button type="text" size="small">编辑</el-button>
+              <el-button @click="view(scope.row)" type="text" size="small">查看</el-button>
+              <el-button @click="edit(scope.row)" type="text" size="small">编辑</el-button>
               <el-button type="text" @click="deleteGoodsById(scope.row)"  size="small">删除</el-button>
             </template>
           </el-table-column>
@@ -44,14 +44,14 @@
     </div>
 
     <el-dialog :visible.sync="dialogFormVisible">
-      <Goods @ok="refresh"></Goods>
+      <Goods  :displayType="displayType" :goods="goodsForId"  @ok="refresh"></Goods>
     </el-dialog>
   </div>
 </template>
 
 <script>
 import { getAllClassification } from '../../../api/admin/classifationApi'
-import { getGoods, deleteGoods } from '../../../api/admin/goodsApi'
+import { getGoods, deleteGoods, getGoodsById } from '../../../api/admin/goodsApi'
 import Goods from './goods/index'
 
 export default {
@@ -59,7 +59,9 @@ export default {
   data () {
     return {
       dialogFormVisible: false,
+      goodsForId: {},
       treeData: [],
+      displayType: 0, // 0 新增， 1 编辑， 2 查看
       defaultProps: {
         children: 'children',
         label: 'label'
@@ -72,7 +74,25 @@ export default {
   },
 
   methods: {
-    async deleteGoodsById (row, col) {
+    async handleNodeClick () {
+
+    },
+    async changeGoodsForId (id) {
+      const res = await getGoodsById(id)
+      this.goodsForId = res.data.data
+      console.log(this.goodsForId)
+    },
+    async view (row) {
+      this.displayType = 2
+      await this.changeGoodsForId(row.pkId)
+      this.dialogFormVisible = true
+    },
+    async edit (row) {
+      console.log(row)
+      this.displayType = 1
+      this.dialogFormVisible = true
+    },
+    async deleteGoodsById (row) {
       deleteGoods(row.pkId)
       this.refresh()
     },

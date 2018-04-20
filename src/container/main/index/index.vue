@@ -68,7 +68,6 @@ export default {
   },
 
   methods: {
-    
     onSubmit (formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {

@@ -94,6 +94,7 @@ export default {
       minorImages: [],
       options: [],
       form: {
+        pkId: '',
         name: '',
         description: '',
         majorImages: [],
@@ -118,8 +119,13 @@ export default {
     selectedClassification: function (val) {
       this.form.classificationId = JSON.stringify(val)
     },
+    displayType: function () {
+      this.mount()
+    },
     goods: function (val) {
       this.mount()
+    },
+    majorImages: function (val) {
     }
   },
 
@@ -131,18 +137,32 @@ export default {
 
   methods: {
     mount () {
-      this.form = Object.assign({}, this.form, this.goods.goods)
+      const form = Object.assign({}, this.form, this.goods.goods)
       this.selectedClassification = JSON.parse(this.goods.goods.classificationId)
-      this.form.majorImages = this.goods.majorImages
-      this.form.minorImages = this.goods.minorImages
+      form.majorImages = this.goods.majorImages
+      form.minorImages = this.goods.minorImages
 
-      this.majorImages = this.form.majorImages.map(item => {
+      this.changeForm(form)
+
+      const majorImages = this.form.majorImages.map(item => {
         return { url: 'http://' + item.path }
       })
 
-      this.minorImages = this.form.minorImages.map(item => {
+      const minorImages = this.form.minorImages.map(item => {
         return { url: 'http://' + item.path }
       })
+
+      this.changeImages(majorImages, minorImages)
+    },
+    changeImages (majorImages, minorImages) {
+      this.majorImages = majorImages
+      this.minorImages = minorImages
+
+      this.form.majorImages = majorImages
+      this.form.minorImages = minorImages
+    },
+    changeForm (form) {
+      this.form = form
     },
     handleMajorRemove (file, fileList) {
       console.log(file, fileList)
@@ -163,13 +183,17 @@ export default {
     },
 
     handleMajorSuccess (res, file, fileList) {
-      this.form.majorImages.push(res.data.pkId)
-      console.log(res)
+      const majorImages = JSON.parse(JSON.stringify(this.majorImages))
+      majorImages.push({ pkId: res.data.pkId, url: 'http://' + res.data.path, status: 'success' })
+
+      this.changeImages(majorImages, this.minorImages)
     },
 
     handleMinorSuccess (res, file, fileList) {
-      this.form.minorImages.push(res.data.pkId)
-      console.log(res)
+      const minorImages = JSON.parse(JSON.stringify(this.minorImages))
+      minorImages.push({ pkId: res.data.pkId, url: 'http://' + res.data.path })
+
+      this.changeImages(this.majorImages, minorImages)
     },
 
     save () {

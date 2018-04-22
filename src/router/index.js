@@ -5,6 +5,7 @@ import Login from '../container/login/index.vue'
 import User from '../container/admin/user/index.vue'
 import Classification from '../container/admin/classification/index.vue'
 import GoodsInfoManage from '../container/admin/goodsInfoManage/index.vue'
+import GoodsDetail from '../container/main/goodsDetail/index.vue'
 
 import Index from '../container/main/index'
 
@@ -28,6 +29,9 @@ export default new Router({
     }, {
       path: '/index',
       component: Index
+    }, {
+      path: '/detail/:id',
+      component: GoodsDetail
     }, {
       path: '/login',
       name: 'login',

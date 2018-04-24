@@ -119,6 +119,7 @@
 </template>
 
 <script>
+import { getGoodsById } from '../../../api/main/indexApi'
 export default {
   data () {
     return {}

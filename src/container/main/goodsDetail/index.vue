@@ -7,31 +7,29 @@
                 </div>
                 <div class="spec-list">
                     <ul>
-                        <li>
-                            <img src="http://localhost:8081//c9e53db5-ee3b-4493-b168-24f725a9aa9b.png" alt="">
-                            <img src="http://localhost:8081//c9e53db5-ee3b-4493-b168-24f725a9aa9b.png" alt="">
-                            <img src="http://localhost:8081//c9e53db5-ee3b-4493-b168-24f725a9aa9b.png" alt="">
+                        <li v-for="(item, index) in majorImages">
+                            <img :src="item" alt="">
                         </li>
                     </ul>
                 </div>
             </div>
             <div class="itemInfo-wrap">
-                <h3>惠普（HP）战86 商用办公台式电脑整机（i3-7100 4G 1TB 集显 Win10 光驱 三年上门）19.5英寸</h3>
+                <h3>{{ goodsInfo.name }}</h3>
 
                 <div class="summary-price-wrap">
                     <div class="summary-price">
                         <span class="property-type">原价</span>
-                        <span class="property-cont">￥1000</span>
+                        <span class="property-cont">￥{{ goodsInfo.price }}</span>
                     </div>
                     <div class="discount-price">
                         <span class="property-type">折扣价</span>
-                        <span class="property-cont">￥800</span>
+                        <span class="property-cont">￥{{ goodsInfo.discountPrice }}</span>
                     </div>
                 </div>
 
                 <div class="inventory">
                     <span class="property-type">库存</span>
-                    <span class="property-cont">800</span>
+                    <span class="property-cont">{{ goodsInfo.inventory }}</span>
                 </div>
 
                 <div class="spec">
@@ -54,7 +52,7 @@
 
                 <div class="amount">
                     <span class="property-type">数量</span>
-                    <el-input-number size="mini"></el-input-number>
+                    <el-input-number size="mini" v-model="amount"></el-input-number>
                 </div>
 
                 <div class="action">
@@ -70,14 +68,10 @@
                 <el-tabs type="border-card">
                     <el-tab-pane label="商品介绍">
                         <div class="description-text">
-                            <p>
-                                品牌: UDON/联顿CPU系列: Intel/英特尔至强E5CPU型号: L5640主板结构: E-ATX主板芯片组类型: Intel X79显卡系列: GTX 1050显存容量: 4GB内存容量: 8GB 16GB硬盘类型: 固态硬盘(SSD)硬盘容量: 120GB 500GB机箱类型: 中塔电源功率: 350W电源80 PLUS认证: 金牌散热方式: 风冷光驱类型: 无光驱声卡接口类型: PCI套餐类型: 套餐一 套餐二 套餐三 套餐四 套餐五 套餐六显存位宽: 128bit显存类型: GDDR5CPU主频: 2.8GHz(含)-3.0GHz(不含)内存类型: DDR3CPU核心数: 八核心内存频率: 1333MHz显卡品牌: 精影主板品牌: zillion/杰灵内存品牌: 镁光硬盘品牌: WD/西部数据电源品牌: ICE机箱品牌: ICE散热设备品牌: pccooler/超频三机箱结构: ATX配置类型: 疯狂游戏型显卡类型: 独立显卡
-                            </p>
+                            <p>{{ goodsInfo.description }}</p>
                         </div>
                         <div class="description-imgs">
-                            <img src="http://localhost:8081//c9e53db5-ee3b-4493-b168-24f725a9aa9b.png" alt="">
-                            <img src="http://localhost:8081//c9e53db5-ee3b-4493-b168-24f725a9aa9b.png" alt="">
-                            <img src="http://localhost:8081//c9e53db5-ee3b-4493-b168-24f725a9aa9b.png" alt="">
+                            <img :src="item" alt="副图" :key="index" v-for="(item, index) in minorImages">
                         </div>
                     </el-tab-pane>
                     <el-tab-pane label="商品评价">
@@ -122,12 +116,30 @@
 import { getGoodsById } from '../../../api/main/indexApi'
 export default {
   data () {
-    return {}
+    return {
+      goodsInfo: {},
+      amount: 1,
+      majorImages: [],
+      minorImages: []
+    }
   },
   created () {
-    console.log(this.$route.params.id)
+    this.getGoods()
   },
-  methods: {}
+  methods: {
+    async getGoods () {
+      const res = await getGoodsById(this.$route.params.id)
+      this.goodsInfo = res.data.data.goods
+      this.majorImages = res.data.data.majorImages.map(item => {
+        return 'http://' + item.path.replace('//', '/')
+      })
+      debugger
+      this.minorImages = res.data.data.minorImages.map(item => {
+        return 'http://' + item.path.replace('//', '/')
+      })
+      console.log(res)
+    }
+  }
 }
 </script>
 
@@ -147,7 +159,7 @@ export default {
 
 .preview-wrap {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   width: 40%;
 }
 .preview img {

@@ -31,7 +31,7 @@
 
     <el-card>
       <div class="goodsList">
-        <div class="goodsItem" v-for="(item, index) in data.content" :key="index">
+        <div class="goodsItem"  @click="toDetail(item)" v-for="(item, index) in data.content" :key="index">
           <el-card :body-style="{ padding: '10px', width: '100%'}">
             <img class="goodsImg" :src="item.majorImage.length > 0 ? 'http://' + item.majorImage[0].path : 'http://www.atool.org/placeholder.png?size=180x240'" alt="88">
             <div class="info">
@@ -83,6 +83,10 @@ export default {
           return false
         }
       })
+    },
+    toDetail (item) {
+      const id = item.goods.pkId
+      this.$router.push({ path: '/detail/' + id })
     }
   }
 }

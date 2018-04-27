@@ -1,5 +1,6 @@
 <template>
   <div class="indexContainer">
+    <SiteNav></SiteNav>
     <el-card style="text-align: center;">
       <el-form :inline="true" :model="searchForm" ref="searchForm" class="searchForm">
         <el-form-item label="标题：">
@@ -46,6 +47,7 @@
 </template>
 
 <script>
+import SiteNav from '../../../components/SiteNav/index'
 import { getIndexGoods } from '../../../api/main/indexApi'
 
 export default {
@@ -58,6 +60,10 @@ export default {
         endPrice: ''
       }
     }
+  },
+
+  components: {
+    SiteNav: SiteNav
   },
 
   created () {

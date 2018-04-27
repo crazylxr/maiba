@@ -1,44 +1,57 @@
 <template>
-    <div class="login-container">
-        <main>
-            <div>
-                <h3 class="title">
-                    <a href="javascript:;" :class="{'a-active':showSignIn}" @click="changeSign('sign-in')">登录</a>·
-                    <a :class="{'a-active':showSignUp}" href="javascript:;" @click="changeSign('sign-up')">注册</a>
-                </h3>
-                <div class="sign-container">
-                    <div class="sign-in" v-if="showSignIn">
-                        <el-input placeholder="请输入用户名" class="username-in" v-model="input2">
-                            <template slot="prepend">
-                                <i class="el-icon-edit"></i>
-                            </template>
-                        </el-input>
-                        <el-input placeholder="请输入密码" class="password-in" v-model="input3">
-                            <template slot="prepend">
-                                <i class="el-icon-share"></i>
-                            </template>
-                        </el-input>
-                        <el-button type="primary" class="sign-in-btn" round>登录</el-button>
-                    </div>
-                    <div v-if="showSignUp">
-                        <el-input placeholder="请输入内容" class="username-up" v-model="input3">
-                            <template slot="prepend">
-                                <i class="el-icon-share"></i>
-                            </template>
-                        </el-input>
-                        <el-input placeholder="请输入内容" class="password-up" v-model="input3">
-                            <template slot="prepend">
-                                <i class="el-icon-share"></i>
-                            </template>
-                        </el-input>
-                        <el-button type="primary" class="sign-up-btn" round>注册</el-button>
-                    </div>
-                </div>
+  <div class="login-container">
+    <main>
+      <div>
+        <h3 class="title">
+          <a href="javascript:;" :class="{'a-active':showSignIn}" @click="changeSign('sign-in')">登录</a>·
+          <a :class="{'a-active':showSignUp}" href="javascript:;" @click="changeSign('sign-up')">注册</a>
+        </h3>
+        <div class="sign-container">
+          <el-form :model="form">
+            <div class="sign-in" v-if="showSignIn">
+              <el-form-item>
+                <el-input placeholder="请输入用户名" class="username-in" v-model="form.username">
+                  <template slot="prepend">
+                    <i class="el-icon-edit"></i>
+                  </template>
+                </el-input>
+              </el-form-item>
+              <el-from-item>
+                <el-input placeholder="请输入密码" type="password" v-model="form.password" class="password-in">
+                  <template slot="prepend">
+                    <i class="el-icon-share"></i>
+                  </template>
+                </el-input>
+              </el-from-item>
+              <el-button type="primary" class="sign-in-btn" round  @click="handleClick">登录</el-button>
             </div>
-        </main>
-    </div>
+            <div v-if="showSignUp">
+              <el-form-item>
+                <el-input placeholder="邮箱" class="username-up" v-model="form.username">
+                  <template slot="prepend">
+                    <i class="el-icon-edit"></i>
+                  </template>
+                </el-input>
+              </el-form-item>
+              <el-form-item>
+                <el-input placeholder="验证码" type="password" class="password-up" v-model="form.password">
+                  <template slot="prepend">
+                    <i class="el-icon-share"></i>
+                  </template>
+                </el-input>
+              </el-form-item>
+              <el-button type="primary" class="sign-up-btn" round @click="handleClick">注册</el-button>
+            </div>
+          </el-form>
+        </div>
+      </div>
+    </main>
+  </div>
 </template>
 <script>
+
+import { signIn } from '../../api/main/loginApi'
+
 export default {
   data () {
     return {
@@ -46,7 +59,11 @@ export default {
       showSignIn: true,
       showSignUp: false,
       input2: '',
-      input3: ''
+      input3: '',
+      form: {
+        username: '',
+        password: ''
+      }
     }
   },
 
@@ -61,8 +78,9 @@ export default {
         this.showSignUp = true
       }
     },
-    handleClick () {
-      console.log(55)
+    async handleClick () {
+      const res = await signIn(this.form)
+      console.log(res)
     }
   }
 }

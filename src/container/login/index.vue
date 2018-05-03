@@ -50,7 +50,7 @@
 </template>
 <script>
 
-import { signIn } from '../../api/main/loginApi'
+import { signIn, signUp } from '../../api/main/loginApi'
 
 export default {
   data () {
@@ -79,7 +79,16 @@ export default {
       }
     },
     async handleClick () {
-      const res = await signIn(this.form)
+      const res = this.showSignIn ? await signIn(this.form) : await signUp(this.form)
+      console.log(res.data)
+      console.log(localStorage.getItem('token'))
+
+      if (res.data.code !== '0000') {
+        this.$message.error(res.data.msg)
+      } else {
+        debugger
+        localStorage.setItem('token', res.data.data)
+      }
       console.log(res)
     }
   }

@@ -80,16 +80,12 @@ export default {
     },
     async handleClick () {
       const res = this.showSignIn ? await signIn(this.form) : await signUp(this.form)
-      console.log(res.data)
-      console.log(localStorage.getItem('token'))
 
       if (res.data.code !== '0000') {
         this.$message.error(res.data.msg)
       } else {
-        debugger
         localStorage.setItem('token', res.data.data)
       }
-      console.log(res)
     }
   }
 }

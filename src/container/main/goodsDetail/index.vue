@@ -143,10 +143,10 @@ export default {
       const res = await getGoodsById(this.$route.params.id)
       this.goodsInfo = res.data.data.goods
       this.majorImages = res.data.data.majorImages.map(item => {
-        return 'http://' + item.path.replace('//', '/')
+        return 'http://' + item.path.replace('//', '/goods-service/')
       })
       this.minorImages = res.data.data.minorImages.map(item => {
-        return 'http://' + item.path.replace('//', '/')
+        return 'http://' + item.path.replace('//', '/goods-service/')
       })
       console.log(res)
     }

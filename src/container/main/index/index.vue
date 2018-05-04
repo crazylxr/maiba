@@ -34,7 +34,7 @@
       <div class="goodsList">
         <div class="goodsItem"  @click="toDetail(item)" v-for="(item, index) in data.content" :key="index">
           <el-card :body-style="{ padding: '10px', width: '100%'}">
-            <img class="goodsImg" :src="item.majorImage.length > 0 ? 'http://' + item.majorImage[0].path : 'http://www.atool.org/placeholder.png?size=180x240'" alt="88">
+            <img class="goodsImg" :src="item.majorImage.length > 0 ? 'http://localhost:8100/goods-service/' + item.majorImage[0].name + '.png' : 'http://www.atool.org/placeholder.png?size=180x240'" alt="88">
             <div class="info">
               <h5>{{ item.goods.name }}</h5>
               <span>{{ item.goods.price }}</span>

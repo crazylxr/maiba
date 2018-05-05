@@ -8,6 +8,7 @@ import GoodsInfoManage from '../container/admin/goodsInfoManage/index.vue'
 import GoodsDetail from '../container/main/goodsDetail/index.vue'
 
 import Index from '../container/main/index'
+import ShoppingCart from '../container/main/shoppingCart/index'
 
 Vue.use(Router)
 
@@ -32,6 +33,10 @@ export default new Router({
     }, {
       path: '/detail/:id',
       component: GoodsDetail
+    }, {
+      path: '/shoppingCart',
+      name: 'shoppingCart',
+      component: ShoppingCart
     }, {
       path: '/login',
       name: 'login',

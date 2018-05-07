@@ -84,7 +84,8 @@ export default {
       if (res.data.code !== '0000') {
         this.$message.error(res.data.msg)
       } else {
-        localStorage.setItem('token', res.data.data)
+        localStorage.setItem('token', res.data.data.jwt)
+        localStorage.setItem('userId', res.data.data.userId)
       }
     }
   }

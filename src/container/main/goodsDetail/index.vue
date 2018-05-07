@@ -59,7 +59,7 @@
 
                     <div class="action">
                         <el-button type="primary">立即购买</el-button>
-                        <el-button type="success">加入购物车</el-button>
+                        <el-button type="success" @click="addShoppingCart">加入购物车</el-button>
                     </div>
                 </div>
 
@@ -118,6 +118,7 @@
 <script>
 import SiteNav from '../../../components/SiteNav/index'
 import { getGoodsById } from '../../../api/main/indexApi'
+import { saveShoppingCart } from '../../../api/main/goodsDetailApi'
 
 export default {
   data () {
@@ -136,6 +137,10 @@ export default {
     this.getGoods()
   },
   methods: {
+    async addShoppingCart () {
+      const res = await saveShoppingCart(Object.assign({}, this.goodsInfo, { number: this.amount }))
+      console.log(res)
+    },
     changeMajorImg (index) {
       this.majorImgIndex = index
     },

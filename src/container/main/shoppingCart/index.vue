@@ -42,6 +42,7 @@
 
 <script>
 import SiteNav from '../../../components/SiteNav/index'
+import { getShoppingCartByUserId } from '../../../api/main/shoppingCart'
 
 export default {
   data () {
@@ -85,6 +86,15 @@ export default {
   },
   components: {
     SiteNav: SiteNav
+  },
+  created () {
+    getShoppingCartByUserId(localStorage.getItem('userId')).then(res => {
+      this.tableData = res.data.data.map(item => {
+        item.imgUrl = 'http://' + item.imgUrl.replace('//', '/goods-service/')
+        return item
+      })
+      console.log(res)
+    })
   },
   methods: {
     handleSelectionChange (val) {

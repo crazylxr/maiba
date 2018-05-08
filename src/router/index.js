@@ -9,6 +9,9 @@ import GoodsDetail from '../container/main/goodsDetail/index.vue'
 
 import Index from '../container/main/index'
 import ShoppingCart from '../container/main/shoppingCart/index'
+import DeliverAddress from '../container/main/deliverAddress/index'
+import PersonCenter from '../container/main/personalCenter/index'
+import BuyNow from '../container/main/buyNow/index'
 
 Vue.use(Router)
 
@@ -37,6 +40,18 @@ export default new Router({
       path: '/shoppingCart',
       name: 'shoppingCart',
       component: ShoppingCart
+    }, {
+      path: '/my',
+      children: [{
+        path: 'deliverAddress',
+        name: 'deliverAddress',
+        component: DeliverAddress
+      }],
+      component: PersonCenter
+    }, {
+      path: '/buyNow',
+      name: 'buyNow',
+      component: BuyNow
     }, {
       path: '/login',
       name: 'login',

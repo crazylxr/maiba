@@ -37,7 +37,7 @@
 import { getAddress, saveAddress } from '../../../api/main/personalCenterApi'
 
 export default {
-  data() {
+  data () {
     return {
       form: {
         name: '',
@@ -56,11 +56,11 @@ export default {
       this.tableData = res.data.data
       console.log(res)
     },
-    async saveAddress() {
+    async saveAddress () {
       const res = await saveAddress(this.form)
       console.log(res)
     },
-    tableRowClassName({ row, rowIndex }) {
+    tableRowClassName ({ row, rowIndex }) {
       if (rowIndex === 1) {
         return 'warning-row'
       } else if (rowIndex === 3) {

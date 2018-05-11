@@ -5,10 +5,10 @@ import {
 
 const SERVICE = 'goods-service'
 
-export function saveAddress(address) {
+export function saveAddress (address) {
   return post(`${SERVICE}/address`, address)
 }
 
-export function getAddress() {
+export function getAddress () {
   return get(`${SERVICE}/address`)
 }

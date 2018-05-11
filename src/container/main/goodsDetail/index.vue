@@ -58,7 +58,7 @@
                     </div>
 
                     <div class="action">
-                        <el-button type="primary">立即购买</el-button>
+                        <el-button type="primary" @click="buyNow">立即购买</el-button>
                         <el-button type="success" @click="addShoppingCart">加入购物车</el-button>
                     </div>
                 </div>
@@ -137,8 +137,12 @@ export default {
     this.getGoods()
   },
   methods: {
+    async buyNow () {
+      this.$router.push({ name: 'buyNow', params: { ids: JSON.stringify([this.$route.params.id]) } })
+    },
     async addShoppingCart () {
       const res = await saveShoppingCart(Object.assign({}, this.goodsInfo, { number: this.amount }))
+      this.$router.push({ name: 'shoppingCart' })
       console.log(res)
     },
     changeMajorImg (index) {

@@ -13,6 +13,8 @@ import DeliverAddress from '../container/main/deliverAddress/index'
 import PersonCenter from '../container/main/personalCenter/index'
 import BuyNow from '../container/main/buyNow/index'
 
+import ColorEgg from '../container/main/colorEgg/index'
+
 Vue.use(Router)
 
 export default new Router({
@@ -49,13 +51,17 @@ export default new Router({
       }],
       component: PersonCenter
     }, {
-      path: '/buyNow',
+      path: '/buyNow/:ids',
       name: 'buyNow',
       component: BuyNow
     }, {
       path: '/login',
       name: 'login',
       component: Login
+    }, {
+      path: '/colorEgg',
+      name: 'colorEgg',
+      component: ColorEgg
     }
   ]
 })

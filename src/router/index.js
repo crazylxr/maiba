@@ -30,10 +30,13 @@ export default new Router({
       }, {
         path: 'goods',
         component: GoodsInfoManage
+      }, {
+        path: 'user',
+        component: User
       }],
       component: AdminIndex
     }, {
-      path: '/index',
+      path: '/',
       component: Index
     }, {
       path: '/detail/:id',

@@ -48,40 +48,7 @@ export default {
   data () {
     return {
       multipleSelection: [],
-      tableData: [
-        {
-          number: 2,
-          imgUrl:
-            'http://localhost:8100/goods-service/7689be55-8229-4901-bf5e-78b0b724c26e.png',
-          price: 5000,
-          totalPrice: 10000,
-          name: '华硕飞行堡垒第四代 测试更新'
-        },
-        {
-          number: 2,
-          imgUrl:
-            'http://localhost:8100/goods-service/7689be55-8229-4901-bf5e-78b0b724c26e.png',
-          price: 5000,
-          totalPrice: 10000,
-          name: '华硕飞行堡垒第四代 测试更新'
-        },
-        {
-          number: 2,
-          imgUrl:
-            'http://localhost:8100/goods-service/7689be55-8229-4901-bf5e-78b0b724c26e.png',
-          price: 5000,
-          totalPrice: 10000,
-          name: '华硕飞行堡垒第四代 测试更新'
-        },
-        {
-          number: 2,
-          imgUrl:
-            'http://localhost:8100/goods-service/7689be55-8229-4901-bf5e-78b0b724c26e.png',
-          price: 5000,
-          totalPrice: 10000,
-          name: '华硕飞行堡垒第四代 测试更新'
-        }
-      ]
+      tableData: []
     }
   },
   components: {
@@ -97,6 +64,14 @@ export default {
     })
   },
   methods: {
+    toBuyNow () {
+      const ids = this.multipleSelection.map(res => res.goodsId)
+      if (ids.length && ids.length > 0) {
+        this.$router.push({ name: 'buyNow', params: { ids: JSON.stringify(ids) } })
+      } else {
+        this.$message({ message: '请选择商品!', type: 'warning' })
+      }
+    },
     handleSelectionChange (val) {
       this.multipleSelection = val
     },
@@ -128,7 +103,7 @@ export default {
             return <span>总价为： {this.renderText('￥' + totalPrice)}</span>
           },
           6: function handle () {
-            return <el-button type="primary">结算</el-button>
+            return <el-button type="primary" onClick={ this.toBuyNow }>结算</el-button>
           }
         }
 

@@ -5,14 +5,14 @@ const userId = localStorage.getItem('userId')
 const token = localStorage.getItem('token')
 
 const headers = {
-    headers: {
-      'Authorization': 'BASIC' + token, 
-      'userId': userId
-    }
+  headers: {
+    'Authorization': 'BASIC' + token,
+    'userId': userId
+  }
 }
 
-export function get (url) { 
-  return axios.get(url, headers) 
+export function get (url) {
+  return axios.get(url, headers)
 }
 
 export function post (url, requestBody) {

@@ -58,12 +58,12 @@
 </template>
 <script>
 import SiteNav from '../../../components/SiteNav/index'
-import { getAddress, saveAddress } from '../../../api/main/personalCenterApi'
+import { getAddress } from '../../../api/main/personalCenterApi'
 import { getGoodsById } from '../../../api/main/indexApi'
 import { saveOrder } from '../../../api/main/buyNowApi'
 
 export default {
-  data() {
+  data () {
     return {
       ids: [],
       address: [],
@@ -75,12 +75,12 @@ export default {
   components: {
     SiteNav: SiteNav
   },
-  created() {
+  created () {
     this.fetchAddress()
     this.fetchGoods()
   },
   methods: {
-    async submitOrder() {
+    async submitOrder () {
       if (this.multipleSelection.length === 0) {
         this.$message({ message: '请选择商品!', type: 'warning' })
         return
@@ -93,7 +93,7 @@ export default {
 
       this.$router.push({ name: 'colorEgg' })
     },
-    async fetchGoods() {
+    async fetchGoods () {
       this.ids = JSON.parse(this.$route.params.ids)
 
       this.ids.forEach(item => {
@@ -113,33 +113,33 @@ export default {
         })
       })
     },
-    async fetchAddress() {
+    async fetchAddress () {
       const res = await getAddress()
       this.address = res.data.data
       console.log(this.address)
     },
-    getSummaries(param) {
+    getSummaries (param) {
       const { columns } = param
       return columns.map((item, index) => {
         const map = {
-          0: function handle() {
+          0: function handle () {
             return '合计'
           },
-          4: function handle() {
+          4: function handle () {
             return (
               <span>
                 已选商品 {this.renderText(this.multipleSelection.length)} 件
               </span>
             )
           },
-          5: function handle() {
+          5: function handle () {
             const totalPrice = this.multipleSelection.reduce((a, b) => {
               return a + b.number * b.price
             }, 0)
 
             return <span>总价为： {this.renderText('￥' + totalPrice)}</span>
           },
-          6: function handle() {
+          6: function handle () {
             return <el-button type="primary">结算</el-button>
           }
         }
@@ -147,10 +147,10 @@ export default {
         return map[index] ? map[index].apply(this) : ''
       })
     },
-    renderText(text) {
+    renderText (text) {
       return <span style="color: #66b1f1;font-size: 16px;">{text}</span>
     },
-    handleSelectionChange(val) {
+    handleSelectionChange (val) {
       this.multipleSelection = val
     }
   }

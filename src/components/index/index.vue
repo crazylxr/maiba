@@ -12,7 +12,9 @@
                 <span>基本管理</span>
               </template>
               <el-menu-item-group>
-                <el-menu-item index="1-1">用户管理</el-menu-item>
+                <router-link to="/admin/user">
+                  <el-menu-item index="1-1">用户管理</el-menu-item>
+                </router-link>
                 <router-link to="/admin/classification">
                   <el-menu-item index="1-2">分类管理</el-menu-item>
                 </router-link>

@@ -5,12 +5,12 @@
             <el-aside style="width: 100%;">
                 <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
                     <el-menu-item index="1">
-                        <router-link to="/admin/classification">
+                        <router-link to="/my/info">
                             我的资料
                         </router-link>
                     </el-menu-item>
                     <el-menu-item index="3">
-                        <router-link to="/shoppingCart">
+                        <router-link to="/shoppingCart" target="_blank">
                             我的购物车
                         </router-link>
                     </el-menu-item>

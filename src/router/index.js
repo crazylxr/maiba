@@ -14,6 +14,7 @@ import PersonCenter from '../container/main/personalCenter/index'
 import BuyNow from '../container/main/buyNow/index'
 
 import ColorEgg from '../container/main/colorEgg/index'
+import MyInfo from '../container/main/personalCenter/myInfo'
 
 Vue.use(Router)
 
@@ -51,6 +52,10 @@ export default new Router({
         path: 'deliverAddress',
         name: 'deliverAddress',
         component: DeliverAddress
+      }, {
+        path: 'info',
+        name: 'myInfo',
+        component: MyInfo
       }],
       component: PersonCenter
     }, {

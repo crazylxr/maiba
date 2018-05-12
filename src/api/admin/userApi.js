@@ -6,7 +6,7 @@ import {
 const SERVICE = 'goods-service'
 
 export function getUsers () {
-  return get(`${SERVICE}/users`)
+  return get(`${SERVICE}/admin/users`)
 }
 
 export function updateUser (user) {

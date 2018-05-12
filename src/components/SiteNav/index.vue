@@ -1,7 +1,7 @@
 <template>
   <div id="site-nav">
       <ul>
-          <li>你好，<a href="#">xxx</a></li>
+          <li>你好，<a href="http://localhost:8081/#/my">xxx</a></li>
           <li><a href="#">我的订单</a></li>
           <li><a href="#">我的购物车</a></li>
       </ul>

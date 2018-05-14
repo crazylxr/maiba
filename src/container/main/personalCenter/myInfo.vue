@@ -30,24 +30,22 @@
 <script>
 export default {
   data () {
-      return {
-          form: {
-              gender: 1
-          }
+    return {
+      form: {
+        gender: 1
       }
+    }
   },
   methods: {
-      onSubmit () {
-          alert(55)
-      }
+    onSubmit () {
+      alert(55)
+    }
   }
 }
 </script>
 
 <style lang="less" scoped>
 .formInput {
-    width: 200px !important;
+  width: 200px !important;
 }
-
 </style>
-

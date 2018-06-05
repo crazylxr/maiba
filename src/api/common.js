@@ -21,9 +21,9 @@ export function post (url, requestBody) {
 
 // delete 为关键字,不能作为方法名
 export function remove (url) {
-  return axios.delete(url)
+  return axios.delete(url, headers)
 }
 
 export function put (url, requestBody) {
-  return axios.put(url, requestBody)
+  return axios.put(url, requestBody, headers)
 }

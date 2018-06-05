@@ -3,6 +3,9 @@
     <SiteNav></SiteNav>
     <el-card style="text-align: center;">
       <el-form :inline="true" :model="searchForm" ref="searchForm" class="searchForm">
+        <el-cascader :options="options" v-model="selectedClassification" @change="handleChange">
+        </el-cascader>
+
         <el-form-item label="标题：">
           <el-input v-model="searchForm.title" placeholder="标题"></el-input>
         </el-form-item>
@@ -57,7 +60,9 @@ export default {
       searchForm: {
         title: '',
         startPrice: '',
-        endPrice: ''
+        endPrice: '',
+        selectedClassification: [],
+        options:[]
       }
     }
   },

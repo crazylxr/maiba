@@ -1,9 +1,10 @@
 <template>
   <div id="site-nav">
+      <h4><a href="http://localhost:8081/#/">首页</a></h4>
       <ul>
           <li>你好，<a href="http://localhost:8081/#/my">xxx</a></li>
           <li><a href="#">我的订单</a></li>
-          <li><a href="#">我的购物车</a></li>
+          <li><a href="http://localhost:8081/#/shoppingCart" target="_blank">我的购物车</a></li>
       </ul>
   </div>
 </template>
@@ -13,6 +14,13 @@
 #site-nav {
     height: 40px;
     background: #66b1f1;
+    position: relative;
+
+    h4 {
+        position: absolute;
+        top: -10px;
+        left: 100px;
+    }
 
     ul {
         display: flex;

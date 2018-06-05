@@ -32,7 +32,7 @@
                 </el-table-column>
                 <el-table-column label="操作" align="center">
                     <template slot-scope="scope">
-                        <el-button size="mini" type="danger">删除</el-button>
+                        <el-button size="mini" type="danger" @click="remove(scope.row.pkId)">删除</el-button>
                     </template>
                 </el-table-column>
             </el-table>
@@ -42,7 +42,7 @@
 
 <script>
 import SiteNav from '../../../components/SiteNav/index'
-import { getShoppingCartByUserId } from '../../../api/main/shoppingCart'
+import { getShoppingCartByUserId, deleteByGoodId } from '../../../api/main/shoppingCart'
 
 export default {
   data () {
@@ -64,6 +64,17 @@ export default {
     })
   },
   methods: {
+    remove(goodsId) {
+      deleteByGoodId(goodsId).then(res => {
+        getShoppingCartByUserId(localStorage.getItem('userId')).then(res => {
+      this.tableData = res.data.data.map(item => {
+        item.imgUrl = 'http://' + item.imgUrl.replace('//', '/goods-service/')
+        return item
+      })
+      console.log(res)
+    })
+      })
+    },
     toBuyNow () {
       const ids = this.multipleSelection.map(res => res.goodsId)
       if (ids.length && ids.length > 0) {

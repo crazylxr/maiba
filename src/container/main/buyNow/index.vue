@@ -165,4 +165,8 @@ export default {
   margin-top: 15px;
   text-align: right;
 }
+.goodsPic {
+  width: 160px;
+  height: 160px;
+}
 </style>

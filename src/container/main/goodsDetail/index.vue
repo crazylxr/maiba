@@ -5,7 +5,7 @@
             <div class="product-info">
                 <div class="preview-wrap">
                     <div class="preview">
-                        <img :src="majorImages[majorImgIndex]" alt="">
+                        <img class="preview_img" :src="majorImages[majorImgIndex]" alt="无图">
                     </div>
                     <div class="spec-list">
                         <ul>
@@ -164,6 +164,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
+
 .content {
   width: 800px;
   margin: 0 auto;
@@ -182,9 +183,13 @@ export default {
   flex-direction: column;
   width: 40%;
 }
+.preview {
+  height: 320px;
+  border: 1px solid #cecece;
+}
 .preview img {
   width: 100%;
-  border: 1px solid #cecece;
+  height: 320px;
 }
 .spec-list ul {
   display: flex;

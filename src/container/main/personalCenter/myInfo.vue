@@ -38,7 +38,7 @@ export default {
   },
   methods: {
     onSubmit () {
-      alert(55)
+      
     }
   }
 }

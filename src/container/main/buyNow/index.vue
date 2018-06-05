@@ -105,7 +105,8 @@ export default {
               'http://' +
               singleGoods.majorImages[0].path.replace('//', '/goods-service/'),
             price: singleGoods.goods.price,
-            name: singleGoods.goods.name
+            name: singleGoods.goods.name,
+            goodsId: singleGoods.goods.pkId
           }
 
           this.tableData.push(tmp)

@@ -15,6 +15,8 @@ import BuyNow from '../container/main/buyNow/index'
 
 import ColorEgg from '../container/main/colorEgg/index'
 import MyInfo from '../container/main/personalCenter/myInfo'
+import OrdersManage from '../container/admin/orderManage/index'
+import Orders from '../container/main/orderManage/index'
 
 Vue.use(Router)
 
@@ -34,6 +36,9 @@ export default new Router({
       }, {
         path: 'user',
         component: User
+      }, {
+        path: 'orders',
+        component: OrdersManage
       }],
       component: AdminIndex
     }, {
@@ -70,6 +75,10 @@ export default new Router({
       path: '/colorEgg',
       name: 'colorEgg',
       component: ColorEgg
+    }, {
+      path: '/orders',
+      name: 'orders',
+      component: Orders
     }
   ]
 })

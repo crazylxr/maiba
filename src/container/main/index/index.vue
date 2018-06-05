@@ -52,6 +52,7 @@
 <script>
 import SiteNav from '../../../components/SiteNav/index'
 import { getIndexGoods } from '../../../api/main/indexApi'
+import { getAllClassification } from '../../../api/admin/classifationApi'
 
 export default {
   data () {
@@ -62,7 +63,7 @@ export default {
         startPrice: '',
         endPrice: '',
         selectedClassification: [],
-        options:[]
+        options: []
       }
     }
   },
@@ -75,6 +76,10 @@ export default {
     getIndexGoods().then(res => {
       this.data = res.data.data
       console.log(res)
+    })
+
+    getAllClassification().then(res => {
+      this.options = res.data.data[0].children
     })
   },
 

@@ -21,6 +21,18 @@
               </el-menu-item-group>
             </el-submenu>
 
+            <el-submenu index="2">
+              <template slot="title">
+                <i class="el-icon-goods"></i>
+                <span>订单管理</span>
+              </template>
+              <el-menu-item-group>
+                <router-link to="/admin/orders">
+                  <el-menu-item index="2-1">订单管理</el-menu-item>
+                </router-link>
+              </el-menu-item-group>
+            </el-submenu>
+
             <el-submenu index="3">
               <template slot="title">
                 <i class="el-icon-goods"></i>

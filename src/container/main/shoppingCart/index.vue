@@ -64,15 +64,14 @@ export default {
     })
   },
   methods: {
-    remove(goodsId) {
+    remove (goodsId) {
       deleteByGoodId(goodsId).then(res => {
         getShoppingCartByUserId(localStorage.getItem('userId')).then(res => {
-      this.tableData = res.data.data.map(item => {
-        item.imgUrl = 'http://' + item.imgUrl.replace('//', '/goods-service/')
-        return item
-      })
-      console.log(res)
-    })
+          this.tableData = res.data.data.map(item => {
+            item.imgUrl = 'http://' + item.imgUrl.replace('//', '/goods-service/')
+            return item
+          })
+        })
       })
     },
     toBuyNow () {
